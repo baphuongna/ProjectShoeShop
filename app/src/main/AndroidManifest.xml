@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lee.projectshoeshop">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- Google Maps API Key -->
     <meta-data
         android:name="com.google.android.geo.API_KEY"
@@ -28,14 +29,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.AndressActivity" />
-
         <activity
             android:name=".Activity.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".Activity.LoginActivity"></activity>
+        <activity android:name=".Activity.LoginActivity" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name=".Activity.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
