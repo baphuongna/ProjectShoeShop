@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">ProjectShoeShop</string>
+    <string name="google_maps_api_key">AIzaSyCo2rRyg1sfl_Wkl24ILS3Iyj8GV8ccivw</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="facebook_app_id">651015388590703</string>
+
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="firebase_user_management">Firebase User Management</string>
+
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="google_title_text">Google Sign In</string>
+    <string name="signed_out">Signed Out</string>
 </resources>
