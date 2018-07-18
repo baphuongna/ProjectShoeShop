@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -17,9 +18,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lee.projectshoeshop.Adapter.ProductAdapter;
+import com.example.lee.projectshoeshop.Entity.Product;
 import com.example.lee.projectshoeshop.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +32,7 @@ import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +40,7 @@ public class HomeActivity extends AppCompatActivity
     private TextView txtName;
     private TextView txtEmail;
     private ImageView avatar;
+    private ListView listProduct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,18 +70,20 @@ public class HomeActivity extends AppCompatActivity
 
         avatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView);
         txtName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtName1);
-       txtEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtEmail1);
+        txtEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtEmail1);
 
-
+        View v = (View) drawer.findViewById(R.id.homelayout).findViewById(R.id.hLayout);
+        listProduct = (ListView) v.findViewById(R.id.viewProduct);
+        ArrayList<Product> arrProduct = new ArrayList<>();
+        arrProduct.add(new Product());
+        ProductAdapter productAdapter = new ProductAdapter(this, R.layout.product_adapter, arrProduct);
+        listProduct.setAdapter(productAdapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        txtName.setText(currentUser.getDisplayName());
-//        txtEmail.setText(currentUser.getEmail());
-//        avatar.setImageURI(currentUser.getPhotoUrl());
         updateUI(currentUser);
     }
 
@@ -93,6 +101,7 @@ public class HomeActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
+
         return true;
     }
 
