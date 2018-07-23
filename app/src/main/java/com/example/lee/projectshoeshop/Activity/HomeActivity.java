@@ -52,6 +52,7 @@ public class HomeActivity extends AppCompatActivity
     private TextView txtEmail;
     private ImageView avatar;
     private ListView listProduct;
+    private FloatingActionButton cart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +103,18 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        View getAppBar = (View) drawer.findViewById(R.id.homelayout);
+        cart = (FloatingActionButton) getAppBar.findViewById(R.id.fab);
+
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

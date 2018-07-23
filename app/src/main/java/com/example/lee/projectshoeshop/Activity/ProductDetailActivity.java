@@ -90,7 +90,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         cartItem.setId(product.getId());
         cartItem.setName(product.getName());
         cartItem.setImage(product.getImageUrls().get(1));
-        cartItem.setPrice(product.getOriginalPrice() - ((product.getOriginalPrice()*product.getSalesRate())/100));
+        double newprice = product.getOriginalPrice() - ((product.getOriginalPrice()*product.getSalesRate())/100);
+        cartItem.setPrice(newprice);
         cartItem.setQuantity(1);
         DB.child("cart").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -100,6 +101,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     double quan = Double.parseDouble(quantity);
                     quan = quan+1;
                     DB.child("cart").child(userID).child(cartItem.getId()).child("quantity").setValue(quan);
+                    DB.child("cart").child(userID).child(cartItem.getId()).child("price").setValue(quan*cartItem.getPrice());
                 }else{
                     DB.child("cart").child(userID).child(cartItem.getId()).setValue(cartItem);
                 }

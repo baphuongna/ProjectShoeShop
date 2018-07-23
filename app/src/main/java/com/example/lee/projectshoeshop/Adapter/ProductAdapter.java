@@ -60,7 +60,6 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         }
         Product product = arrProduct.get(position);
         List<String> image = product.getImageUrls();
-      //  String[] arrImage = product.getImageUrls().toString().split(",");
         StorageReference firebaseStorage = FirebaseStorage.getInstance().getReferenceFromUrl("gs://shoeshopdb.appspot.com").child(image.get(1)+".PNG");
 
         try {
@@ -79,20 +78,6 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             });
         } catch (IOException e ) {}
 
-        //Glide.with(convertView).load(firebaseStorage.getDownloadUrl()).into(viewHolder.iconProduct);
-        //viewHolder.iconProduct.
-//        viewHolder.icon.setImageURI(Uri.parse("http://bit.ly/2O37WyQ"));
-//        String src = ("http://bit.ly/2O37WyQ");
-//        new AsyncTaskLoadImage(viewHolder.icon).execute(src);
-//        Glide.with(convertView)
-//                .load("http://bit.ly/2O37WyQ")
-//                .apply(RequestOptions.circleCropTransform())
-//                .into(viewHolder.icon);
-        //viewHolder.icon.setImageResource(R.drawable.chuck1970s);
-//        Drawable myDrawable = context.getResources().getDrawable(R.drawable.chuck1970s);
-//        viewHolder.iconProduct.setImageDrawable(myDrawable);
-
-//        viewHolder.icon.setImageURI(product.getImageUrls().get(0));
         viewHolder.txtName.setText(product.getName());
         viewHolder.txtPrice.setText(product.getCurrentPrice()+"VND");
         viewHolder.txtSales.setText(product.getSalesRate()+"%");
