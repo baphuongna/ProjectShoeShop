@@ -6,60 +6,21 @@ import java.util.Date;
 import java.util.List;
 
 public class Product implements Serializable{
-    /**
-     * Product ID.
-     */
+
     private String id;
-    /**
-     * Product name.
-     */
     private String name = "";
-    /**
-     * Product description.
-     */
     private String description = "";
-    /**
-     * The time that the product is posted.
-     */
     private Date postedTime = new Date();
-    /**
-     * Product category.
-     */
     private String category;
-    /**
-     * Product brand.
-     */
     private String brand;
-    /**
-     * Product gender.
-     */
     private String gender;
-    /**
-     * Product images.
-     */
     private List<String> imageUrls = new ArrayList<>();
-    /**
-     * The size of the product.
-     */
-    private double size = 1;
-    /**
-     * Whether the product is available in the inventory.
-     */
-    private boolean available = false;
-    /**
-     * The current price of the product. It should be less than or equal to the original price.
-     */
+    private List<String> size;
     private double currentPrice = 0;
-    /**
-     * The original price of the product.
-     */
     private double originalPrice = 0;
-    /**
-     * The average ratings of the product, or null if there is no review.
-     * This is a redundant field for easier product searching and sorting.
-     */
     private Double averageRatings = null;
     private double salesRate = 0;
+    private double quantity;
     public Product() {
     }
 
@@ -72,9 +33,9 @@ public class Product implements Serializable{
     }
 
     public Product(String id, String name, String description, Date postedTime, String category,
-                   String brand, String gender, List<String> imageUrls, double size,
-                   boolean available, double currentPrice, double originalPrice,
-                   Double averageRatings, Double salesRate) {
+                   String brand, String gender, List<String> imageUrls, List<String> size,
+                   double currentPrice, double originalPrice, Double averageRatings,
+                   double salesRate, double quantity) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -84,11 +45,11 @@ public class Product implements Serializable{
         this.gender = gender;
         this.imageUrls = imageUrls;
         this.size = size;
-        this.available = available;
         this.currentPrice = currentPrice;
         this.originalPrice = originalPrice;
         this.averageRatings = averageRatings;
         this.salesRate = salesRate;
+        this.quantity = quantity;
     }
 
     public String getId() {
@@ -155,22 +116,6 @@ public class Product implements Serializable{
         this.imageUrls = imageUrls;
     }
 
-    public double getSize() {
-        return size;
-    }
-
-    public void setSize(double size) {
-        this.size = size;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
     public double getCurrentPrice() {
         if(getSalesRate() > 0){
             return getOriginalPrice()* getSalesRate();
@@ -206,6 +151,22 @@ public class Product implements Serializable{
         this.salesRate = salesRate;
     }
 
+    public List<String> getSize() {
+        return size;
+    }
+
+    public void setSize(List<String> size) {
+        this.size = size;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -218,11 +179,11 @@ public class Product implements Serializable{
                 ", gender='" + gender + '\'' +
                 ", imageUrls=" + imageUrls +
                 ", size=" + size +
-                ", available=" + available +
                 ", currentPrice=" + currentPrice +
                 ", originalPrice=" + originalPrice +
                 ", averageRatings=" + averageRatings +
                 ", salesRate=" + salesRate +
+                ", quantity=" + quantity +
                 '}';
     }
 }

@@ -53,7 +53,7 @@ public class ProductDAO {
                     product.setAverageRatings(Double.parseDouble(childDataSnapshot.child("averageRatings").getValue().toString()));
 
                     String[] image = childDataSnapshot.child("imageUrls").getValue().toString().split("\\s");
-                    Log.v("", childDataSnapshot.child("name").getValue().toString() + "-------" + image.length + "-----------------------------1------------------------");
+
                     List<String> listimage = new ArrayList<>();
                     for (int i = 0; i < image.length; i++) {
                         listimage.add(image[i]);
@@ -64,8 +64,15 @@ public class ProductDAO {
                     product.setCategory(childDataSnapshot.child("category").getValue().toString());
                     product.setBrand(childDataSnapshot.child("brand").getValue().toString());
                     product.setGender(childDataSnapshot.child("gender").getValue().toString());
-//                    product.setSize(Double.parseDouble(childDataSnapshot.child("p01").child("size").getValue().toString()));
-//                    product.setAvailable(true);
+                    String[] size = childDataSnapshot.child("size").getValue().toString().split(",");
+
+                    List<String> listSize = new ArrayList<>();
+                    for (int i = 0; i < size.length; i++) {
+                        listSize.add(size[i]);
+                    }
+
+                    product.setSize(listSize);
+                    product.setQuantity(Double.parseDouble(childDataSnapshot.child("quantity").getValue().toString()));
                 }
                 listProduct.add(product);
                 ProductAdapter productAdapter = new ProductAdapter(context, R.layout.product_adapter, listProduct);

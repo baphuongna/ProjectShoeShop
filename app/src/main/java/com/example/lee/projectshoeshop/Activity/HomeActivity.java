@@ -88,11 +88,10 @@ public class HomeActivity extends AppCompatActivity
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         DatabaseReference DB = FirebaseDatabase.getInstance().getReferenceFromUrl("https://shoeshopdb.firebaseio.com/");
-//        ArrayList<Product> listP = new ArrayList<>();
-       // ProductAdapter productAdapter = null;
+
         ProductDAO productDAO = new ProductDAO();
-//        if(productDAO.getFullProduct(DB).size() != 0){
-            productDAO.getFullProduct(DB, listProduct, this);
+
+        productDAO.getFullProduct(DB, listProduct, this);
 
         listProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,34 +102,6 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-//            Toast.makeText(this, arrProduct.size()+"", Toast.LENGTH_SHORT).show();
-//        }else{
-//            arrProduct.add(new Product());
-//        }
-//        productAdapter = new ProductAdapter(this, R.layout.product_adapter, arrProduct);
-//        listProduct.setAdapter(productAdapter);
-
-//        DB.child("product").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                ArrayList<Product> arrProduct = new ArrayList<>();
-//                Product product = new Product();
-//                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-//                    product.setId(childDataSnapshot.child("id").getValue().toString());
-//                    product.setName(childDataSnapshot.child("name").getValue().toString());
-//                    Log.v("", childDataSnapshot.getKey()+ " Value : " + childDataSnapshot.child("name").getValue().toString()+"--------------------------------------------");
-//
-//                }
-//                arrProduct.add(product);
-//                ProductAdapter productAdapter = new ProductAdapter(HomeActivity.this, R.layout.product_adapter, arrProduct);
-//                listProduct.setAdapter(productAdapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 
     @Override
