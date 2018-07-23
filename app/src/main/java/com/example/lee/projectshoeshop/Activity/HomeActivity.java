@@ -3,11 +3,11 @@ package com.example.lee.projectshoeshop.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,22 +17,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.lee.projectshoeshop.Adapter.ProductAdapter;
+import com.example.lee.projectshoeshop.DAO.ProductDAO;
 import com.example.lee.projectshoeshop.Entity.Product;
 import com.example.lee.projectshoeshop.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import org.w3c.dom.Text;
-
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -74,10 +85,52 @@ public class HomeActivity extends AppCompatActivity
 
         View v = (View) drawer.findViewById(R.id.homelayout).findViewById(R.id.hLayout);
         listProduct = (ListView) v.findViewById(R.id.viewProduct);
-        ArrayList<Product> arrProduct = new ArrayList<>();
-        arrProduct.add(new Product());
-        ProductAdapter productAdapter = new ProductAdapter(this, R.layout.product_adapter, arrProduct);
-        listProduct.setAdapter(productAdapter);
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        DatabaseReference DB = FirebaseDatabase.getInstance().getReferenceFromUrl("https://shoeshopdb.firebaseio.com/");
+//        ArrayList<Product> listP = new ArrayList<>();
+       // ProductAdapter productAdapter = null;
+        ProductDAO productDAO = new ProductDAO();
+//        if(productDAO.getFullProduct(DB).size() != 0){
+            productDAO.getFullProduct(DB, listProduct, this);
+
+        listProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Product product =(Product) adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(HomeActivity.this, ProductDetailActivity.class);
+                intent.putExtra("data", product);
+                startActivity(intent);
+            }
+        });
+//            Toast.makeText(this, arrProduct.size()+"", Toast.LENGTH_SHORT).show();
+//        }else{
+//            arrProduct.add(new Product());
+//        }
+//        productAdapter = new ProductAdapter(this, R.layout.product_adapter, arrProduct);
+//        listProduct.setAdapter(productAdapter);
+
+//        DB.child("product").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                ArrayList<Product> arrProduct = new ArrayList<>();
+//                Product product = new Product();
+//                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+//                    product.setId(childDataSnapshot.child("id").getValue().toString());
+//                    product.setName(childDataSnapshot.child("name").getValue().toString());
+//                    Log.v("", childDataSnapshot.getKey()+ " Value : " + childDataSnapshot.child("name").getValue().toString()+"--------------------------------------------");
+//
+//                }
+//                arrProduct.add(product);
+//                ProductAdapter productAdapter = new ProductAdapter(HomeActivity.this, R.layout.product_adapter, arrProduct);
+//                listProduct.setAdapter(productAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -125,8 +178,7 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_Home) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
@@ -134,10 +186,13 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_accountsetting) {
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_signout) {
+            signOut();
+            Intent intent = new Intent(this, LoginActivity.class);
+            finish();
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -152,10 +207,10 @@ public class HomeActivity extends AppCompatActivity
            txtEmail.setText(getString(R.string.google_status_fmt, user.getEmail()));
 
            try {
-               String url1 = user.getPhotoUrl().toString();
-               URL url = new URL(url1);
-               Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-               avatar.setImageBitmap(image);
+               Glide.with(this)
+                       .load(user.getPhotoUrl())
+                       .apply(RequestOptions.circleCropTransform())
+                       .into(avatar);
            }catch (Exception e){
                Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
            }
@@ -165,5 +220,10 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         }
+    }
+
+    private void signOut() {
+        // Firebase sign out
+        mAuth.signOut();
     }
 }

@@ -183,6 +183,7 @@ public class LoginActivity extends AppCompatActivity {
             findViewById(R.id.btnSignout).setVisibility(View.VISIBLE);
 
             Intent intent = new Intent(this, HomeActivity.class);
+            finish();
             startActivity(intent);
         } else {
             mTvInfo.setText(R.string.signed_out);

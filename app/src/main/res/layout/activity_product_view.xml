@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="700dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager1"
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:id="@+id/txtName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/viewpager1"
+                android:text="TextView"
+                android:textColor="@android:color/background_dark"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textview2"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txtName2"
+                android:text="Customer rating:"
+                android:textColor="@android:color/background_dark" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="120dp"
+                android:layout_height="21dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textview2"
+                android:text="Price : "
+                android:textColor="@android:color/background_dark"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="313dp" />
+
+            <RatingBar
+                android:id="@+id/ratingBar2"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_below="@+id/txtName2"
+                android:layout_toEndOf="@+id/textview2"
+                android:numStars="5"
+                android:rating="4" />
+
+            <TextView
+                android:id="@+id/txtPrice2"
+                android:layout_width="127dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/textview2"
+                android:layout_toEndOf="@+id/textview2"
+                android:text="TextView"
+                android:textColor="@android:color/background_dark" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textview2"
+                android:layout_toEndOf="@+id/txtPrice2"
+                android:text="Sale"
+                android:textColor="@android:color/background_dark" />
+
+            <TextView
+                android:id="@+id/txtSales2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textview2"
+                android:layout_toEndOf="@+id/textView8"
+                android:text="TextView"
+                android:textColor="@android:color/holo_red_dark" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="SIZE: "
+                android:textColor="@android:color/background_dark" />
+
+            <TextView
+                android:id="@+id/txtSize2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/textview2"
+                android:layout_centerVertical="true"
+                android:text="Select a Size"
+                android:textColor="@android:color/background_dark" />
+
+            <Spinner
+                android:id="@+id/spinerSize2"
+                android:layout_width="154dp"
+                android:layout_height="22dp"
+                android:layout_alignEnd="@+id/textView8"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="77dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="365dp"
+                android:text="Brand : "
+                android:textColor="@android:color/background_dark" />
+
+            <TextView
+                android:id="@+id/txtBrand2"
+                android:layout_width="159dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView11"
+                android:layout_toEndOf="@+id/textView11"
+                android:text="TextView"
+                android:textColor="@android:color/background_dark" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView11"
+                android:text="Gender : "
+                android:textColor="@android:color/background_dark" />
+
+            <TextView
+                android:id="@+id/txtGender2"
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView13"
+                android:layout_toEndOf="@+id/textView13"
+                android:text="TextView"
+                android:textColor="@android:color/background_dark" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="88dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView13"
+                android:text="Description:"
+                android:textColor="@android:color/background_dark" />
+
+            <TextView
+                android:id="@+id/txtDescription2"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView9"
+                android:text="TextView"
+                android:textColor="@android:color/background_dark" />
+
+            <Button
+                android:id="@+id/btnAddCart2"
+                android:layout_width="match_parent"
+                android:layout_height="59dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txtDescription2"
+                android:text="Add To Cart" />
+        </RelativeLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

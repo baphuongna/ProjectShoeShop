@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ProductDetailActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager1"
+        android:layout_width="match_parent"
+        android:layout_height="223dp"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="231dp"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/txtName"
+        android:layout_marginBottom="220dp"
+        android:text="Customer rating:"
+        android:textColor="@android:color/background_dark" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textview"
+        android:layout_marginStart="140dp"
+        android:numStars="5"
+        android:rating="4" />
+
+    <Spinner
+        android:id="@+id/spinerSize"
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/txtSize"
+        android:layout_marginEnd="51dp" />
+
+    <TextView
+        android:id="@+id/txtSize"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textView10"
+        android:layout_marginStart="61dp"
+        android:text="Select a Size"
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/txtName"
+        android:layout_marginBottom="166dp"
+        android:text="SIZE: "
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/txtName"
+        android:layout_marginBottom="193dp"
+        android:text="Price : "
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textview"
+        android:layout_alignTop="@+id/textView12"
+        android:layout_marginEnd="-46dp"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textview"
+        android:layout_marginEnd="89dp"
+        android:layout_marginTop="-220dp"
+        android:text="Sale"
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/txtSales"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textview"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="-220dp"
+        android:text="TextView"
+        android:textColor="@android:color/holo_red_dark" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/txtName"
+        android:layout_marginBottom="84dp"
+        android:text="Description:"
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtName"
+        android:layout_below="@+id/spinerSize"
+        android:text="Brand : "
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/txtBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textview"
+        android:layout_below="@+id/spinerSize"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/txtName"
+        android:layout_marginBottom="112dp"
+        android:text="Gender : "
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/txtGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView19"
+        android:layout_marginEnd="-140dp"
+        android:layout_toStartOf="@+id/ratingBar"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark" />
+
+    <Button
+        android:id="@+id/btnAddCart"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_marginTop="300dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="Add To Cart" />
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="363dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/txtName"
+        android:layout_marginTop="250dp"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark" />
+
+</RelativeLayout>

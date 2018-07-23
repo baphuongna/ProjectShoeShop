@@ -1,10 +1,11 @@
 package com.example.lee.projectshoeshop.Entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Product {
+public class Product implements Serializable{
     /**
      * Product ID.
      */
@@ -203,5 +204,25 @@ public class Product {
 
     public void setSalesRate(double salesRate) {
         this.salesRate = salesRate;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", postedTime=" + postedTime +
+                ", category='" + category + '\'' +
+                ", brand='" + brand + '\'' +
+                ", gender='" + gender + '\'' +
+                ", imageUrls=" + imageUrls +
+                ", size=" + size +
+                ", available=" + available +
+                ", currentPrice=" + currentPrice +
+                ", originalPrice=" + originalPrice +
+                ", averageRatings=" + averageRatings +
+                ", salesRate=" + salesRate +
+                '}';
     }
 }
