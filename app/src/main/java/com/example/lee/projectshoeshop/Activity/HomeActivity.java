@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,27 +21,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.lee.projectshoeshop.Adapter.ProductAdapter;
 import com.example.lee.projectshoeshop.DAO.ProductDAO;
 import com.example.lee.projectshoeshop.Entity.Product;
 import com.example.lee.projectshoeshop.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -134,28 +120,28 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.home, menu);
+//
+//        return true;
+//    }
 
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -164,11 +150,13 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_Home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_brand) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_forman) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_forwoman) {
+
+        } else if (id == R.id.nav_forkids) {
 
         } else if (id == R.id.nav_accountsetting) {
 
@@ -188,13 +176,16 @@ public class HomeActivity extends AppCompatActivity
         //hideProgressDialog();
         if (user != null) {
             txtName.setText(getString(R.string.google_status_fmt, user.getDisplayName()));
-           txtEmail.setText(getString(R.string.google_status_fmt, user.getEmail()));
+            txtEmail.setText(getString(R.string.google_status_fmt, user.getEmail()));
 
            try {
-               Glide.with(this)
-                       .load(user.getPhotoUrl())
-                       .apply(RequestOptions.circleCropTransform())
-                       .into(avatar);
+               Bitmap bitmap = BitmapFactory.decodeFile(user.getPhotoUrl().getEncodedPath());
+               avatar.setImageBitmap(bitmap);
+//
+//               Glide.with(this)
+//                       .load(user.getPhotoUrl())
+//                       .apply(RequestOptions.circleCropTransform())
+//                       .into(avatar);
            }catch (Exception e){
                Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
            }
@@ -207,7 +198,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void signOut() {
-        // Firebase sign out
         mAuth.signOut();
     }
 }

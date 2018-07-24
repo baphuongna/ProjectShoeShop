@@ -25,7 +25,6 @@ import java.util.List;
 public class ViewPageAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
-    //private Integer[] image = {R.drawable.chuck1970s, R.drawable.andressicon, R.drawable.com_facebook_button_icon};
     private List<String> image;
     public ViewPageAdapter(Context context) {
         this.context = context;

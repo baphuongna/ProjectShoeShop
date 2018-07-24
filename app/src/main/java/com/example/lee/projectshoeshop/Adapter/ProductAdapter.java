@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.lee.projectshoeshop.Entity.Product;
 import com.example.lee.projectshoeshop.R;
 import com.google.android.gms.tasks.OnFailureListener;
