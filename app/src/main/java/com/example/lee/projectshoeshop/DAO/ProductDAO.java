@@ -77,7 +77,6 @@ public class ProductDAO {
                 listProduct.add(product);
                 ProductAdapter productAdapter = new ProductAdapter(context, R.layout.product_adapter, listProduct);
                 listView.setAdapter(productAdapter);
-                Log.v("", listProduct.size()+"-----------------------------2------------------------");
             }
 
             @Override

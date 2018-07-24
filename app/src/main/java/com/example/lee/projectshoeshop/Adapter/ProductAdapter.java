@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,24 +60,25 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         }
         Product product = arrProduct.get(position);
         List<String> image = product.getImageUrls();
-        StorageReference firebaseStorage = FirebaseStorage.getInstance().getReferenceFromUrl("gs://shoeshopdb.appspot.com").child(image.get(1)+".PNG");
+       if(image.size() != 0){
+           StorageReference firebaseStorage = FirebaseStorage.getInstance().getReferenceFromUrl("gs://shoeshopdb.appspot.com").child(image.get(1)+".PNG");
 
-        try {
-            final File localFile = File.createTempFile("images", "jpg");
-            firebaseStorage.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                    viewHolder.iconProduct.setImageBitmap(bitmap);
+           try {
+               final File localFile = File.createTempFile("images", "jpg");
+               firebaseStorage.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                   @Override
+                   public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                       Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                       viewHolder.iconProduct.setImageBitmap(bitmap);
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                }
-            });
-        } catch (IOException e ) {}
-
+                   }
+               }).addOnFailureListener(new OnFailureListener() {
+                   @Override
+                   public void onFailure(@NonNull Exception exception) {
+                   }
+               });
+           } catch (IOException e ) {}
+       }
         viewHolder.txtName.setText(product.getName());
         viewHolder.txtPrice.setText(product.getCurrentPrice()+"VND");
         viewHolder.txtSales.setText(product.getSalesRate()+"%");

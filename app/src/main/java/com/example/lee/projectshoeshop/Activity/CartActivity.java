@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lee.projectshoeshop.Adapter.CartAdapter;
 import com.example.lee.projectshoeshop.Entity.CartItem;
@@ -54,9 +55,14 @@ public class CartActivity extends AppCompatActivity {
                     total += Double.parseDouble(childDataSnapshot.child("price").getValue().toString());
                 }
                 arrCart.add(cartItem);
-                CartAdapter cartAdapter = new CartAdapter(CartActivity.this, R.layout.cart_adapter, arrCart);
-                listCart.setAdapter(cartAdapter);
-                txtTotalPrice.setText(total+"$");
+                if(!dataSnapshot.exists()){
+                    Toast.makeText(CartActivity.this, "Cart is Empty. Please Add Product to cart before view Cart!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    CartAdapter cartAdapter = new CartAdapter(CartActivity.this, R.layout.cart_adapter, arrCart);
+                    listCart.setAdapter(cartAdapter);
+                    txtTotalPrice.setText(total+"$");
+                }
             }
 
             @Override

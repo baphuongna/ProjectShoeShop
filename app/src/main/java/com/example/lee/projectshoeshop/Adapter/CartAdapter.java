@@ -1,6 +1,8 @@
 package com.example.lee.projectshoeshop.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.lee.projectshoeshop.Activity.CartActivity;
 import com.example.lee.projectshoeshop.Entity.CartItem;
 import com.example.lee.projectshoeshop.Entity.Product;
 import com.example.lee.projectshoeshop.R;
@@ -99,14 +102,14 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
         viewHolder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DB.child("cart").child(userID).child(cartItem.getId()).removeValue();
+                alertDialog(context, DB, userID, cartItem);
             }
         });
 
         viewHolder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(cartItem.getQuantity() > 0){
+                if(cartItem.getQuantity() > 1){
                     DB.child("cart").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -126,6 +129,8 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
 
                         }
                     });
+                }else{
+                    alertDialog(context, DB, userID, cartItem);
                 }
             }
         });
@@ -162,6 +167,26 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
         ImageView imageP;
         TextView txtName, txtPrice, txtQuantity;
         Button btnMinus, btnPlus, btnRemove;
+    }
+
+    protected void alertDialog(Context context, final DatabaseReference DB, final String userID, final CartItem cartItem){
+        final AlertDialog builder =
+        new AlertDialog.Builder(context)
+                .setMessage("Do You Want Remove This Product !")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        DB.child("cart").child(userID).child(cartItem.getId()).removeValue();
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.cancel();
+                    }
+                }).show();
     }
 
 }

@@ -17,31 +17,21 @@ public class Brand implements Serializable {
     /**
      * Brand name.
      */
-    private String name = "";
+    private String name;
 
     /**
      * Brand logo.
      */
-    private String imageUrl = "";
+    private String imageUrl;
 
     public Brand() {
 
-    }
-
-    public Brand(String id) {
-        this.id = id;
     }
 
     public Brand(String id, String name, String imageUrl) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
-    }
-
-    protected Brand(Parcel in) {
-        id = in.readString();
-        name = in.readString();
-        imageUrl = in.readParcelable(Uri.class.getClassLoader());
     }
 
     public String getId() {
@@ -69,22 +59,11 @@ public class Brand implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Brand brand = (Brand) o;
-
-        return id != null ? id.equals(brand.id) : brand.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
-
-    @Override
     public String toString() {
-        return name;
+        return "Brand{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }
