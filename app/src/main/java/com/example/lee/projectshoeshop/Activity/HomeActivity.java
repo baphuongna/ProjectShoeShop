@@ -135,14 +135,19 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Brand> listB = new ArrayList<>();
-
+                int i = 1;
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     Brand brand =  new Brand();
                     brand.setId(childDataSnapshot.child("id").getValue().toString());
                     brand.setName(childDataSnapshot.child("name").getValue().toString());
                     brand.setImageUrl(childDataSnapshot.child("imageUrl").getValue().toString());
                     Log.v("", childDataSnapshot.child("name").getValue().toString()+"-----------------------------1------------------------");
-                    listB.add(brand);
+                    if(i > 3){
+                        break;
+                    }else {
+                        listB.add(brand);
+                    }
+                    i++;
                 }
 
                 Log.v("", listB.toString()+"-----------------------------2------------------------");
