@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/proImage"
+        android:layout_width="173dp"
+        android:layout_height="191dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="3dp" />
+
+    <TextView
+        android:id="@+id/txtNamePro"
+        android:layout_width="169dp"
+        android:layout_height="34dp"
+        android:layout_below="@+id/proImage"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/txtMoney"
+        android:layout_width="163dp"
+        android:layout_height="23dp"
+        android:layout_below="@+id/ratingBar3"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark" />
+
+    <RatingBar
+        android:id="@+id/ratingBar3"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtNamePro"
+        android:layout_centerHorizontal="true"
+        android:numStars="5"
+        android:paddingLeft="3dp"
+        android:rating="4" />
+</RelativeLayout>

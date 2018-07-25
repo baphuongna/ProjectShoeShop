@@ -1,5 +1,6 @@
 package com.example.lee.projectshoeshop.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,28 +37,20 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
+    private EditText txtEmailAddress;
+    private EditText txtPassword;
     private FirebaseAuth mAuth;
-    private TextView mTvInfo;
-    private TextView mTvdetail;
-    private LoginButton mBtnLoginFacebook;
-    private SignInButton btnLoginGG;
+    private Button btnLoginGG;
     private CallbackManager mCallbackManager;
     private static final int RC_SIGN_IN = 123;
     private GoogleSignInClient mGoogleSignInClient;
-    private Button btnSignout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        btnLoginGG = (SignInButton) findViewById(R.id.btnggle);
-        mTvdetail = (TextView) findViewById(R.id.textView5);
-        btnSignout = (Button) findViewById(R.id.btnSignout);
-        btnSignout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signOut();
-            }
-        });
+        txtEmailAddress = (EditText) findViewById(R.id.txtEmailAddress);
+        txtPassword = (EditText) findViewById(R.id.txtPassword);
+        btnLoginGG = (Button) findViewById(R.id.btnggle);
         mAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -71,27 +65,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         mCallbackManager = CallbackManager.Factory.create();
-        mTvInfo = (TextView) findViewById(R.id.textView);
-        mBtnLoginFacebook = (LoginButton) findViewById(R.id.btnloginfb);
-        mBtnLoginFacebook.setReadPermissions("email", "public_profile");
-        mBtnLoginFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                mTvInfo.setText("User ID: " + loginResult.getAccessToken().getUserId() + "\n" +
-                        "Auth Token: " + loginResult.getAccessToken().getToken());
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-                mTvInfo.setText("Login attempt canceled.");
-            }
-
-            @Override
-            public void onError(FacebookException e) {
-                mTvInfo.setText("Login attempt failed.");
-            }
-        });
     }
 
     private void signIn() {
@@ -99,23 +72,69 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    // reg user by email
+    public void btnRegistrationUser_Click(View v) {
+
+        final ProgressDialog progressDialog = ProgressDialog.show(LoginActivity.this, "Please wait...", "Processing...", true);
+        (mAuth.createUserWithEmailAndPassword(txtEmailAddress.getText().toString(), txtPassword.getText().toString()))
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
+
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Registration successful", Toast.LENGTH_LONG).show();
+//                            Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
+//                            startActivity(i);
+                        }
+                        else
+                        {
+                            Log.e("ERROR", task.getException().toString());
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    //login by account
+    public void btnUserLogin_Click(View v) {
+        final ProgressDialog progressDialog = ProgressDialog.show(LoginActivity.this, "Please wait...", "Proccessing...", true);
+
+        (mAuth.signInWithEmailAndPassword(txtEmailAddress.getText().toString(), txtPassword.getText().toString()))
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
+
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                            i.putExtra("Email", mAuth.getCurrentUser().getEmail());
+                            startActivity(i);
+                        } else {
+                            Log.e("ERROR", task.getException().toString());
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                });
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-            if (requestCode == RC_SIGN_IN) {
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                try {
-                    // Google Sign In was successful, authenticate with Firebase
-                    GoogleSignInAccount account = task.getResult(ApiException.class);
-                    // handleSignInResult(task);
-                    firebaseAuthWithGoogle(account);
-                } catch (ApiException e) {
-                    // Google Sign In failed, update UI appropriately
-                    Log.w("", "Google sign in failed", e);
-                    mTvInfo.setText("Sign in fail");
-                }
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                // handleSignInResult(task);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w("", "Google sign in failed", e);
             }
+        }
     }
 
     @Override
@@ -125,29 +144,7 @@ public class LoginActivity extends AppCompatActivity {
         updateUI(currentUser);
     }
 
-    private void handleFacebookAccessToken(AccessToken token) {
-        Log.d("", "handleFacebookAccessToken:" + token);
 
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("", "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
-                    }
-                });
-    }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -159,13 +156,13 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            mTvInfo.setText("User Name: " + user.getDisplayName() + "\n" +
-                                    "Auth Email: " + user.getEmail());
+//                            mTvInfo.setText("User Name: " + user.getDisplayName() + "\n" +
+//                                    "Auth Email: " + user.getEmail());
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("", "signInWithCredential:failure", task.getException());
-                            mTvInfo.setText("fail");
+//                            mTvInfo.setText("fail");
 //                            Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -176,21 +173,15 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         //hideProgressDialog();
         if (user != null) {
-            mTvInfo.setText(getString(R.string.google_status_fmt, user.getEmail()));
-            mTvdetail.setText(getString(R.string.firebase_status_fmt, user.getUid()));
 
             findViewById(R.id.btnggle).setVisibility(View.GONE);
-            findViewById(R.id.btnSignout).setVisibility(View.VISIBLE);
 
             Intent intent = new Intent(this, HomeActivity.class);
             finish();
             startActivity(intent);
         } else {
-            mTvInfo.setText(R.string.signed_out);
-            mTvdetail.setText(null);
 
             findViewById(R.id.btnggle).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnSignout).setVisibility(View.GONE);
         }
     }
 

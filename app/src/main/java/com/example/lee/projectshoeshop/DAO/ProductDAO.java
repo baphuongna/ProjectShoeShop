@@ -27,18 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO {
-//    private static final ArrayList<Product> listProduct = null;
 
     public void getFullProduct(DatabaseReference DB, final ListView listView, final Context context){
-       // DB = FirebaseDatabase.getInstance().getReferenceFromUrl("https://shoeshopdb.firebaseio.com/shoeshopdb");
 
-//        readData(DB, new MyCallback() {
-//            @Override
-//            public void onCallback(Product value) {
-//                listProduct.add(value);
-//                Log.v("", listProduct.size()+"---------------------------1--------------------------");
-//            }
-//        });
         DB.child("product").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -84,58 +75,6 @@ public class ProductDAO {
 
             }
         });
-//        Log.v("", listProduct.size()+"-----------------------------2------------------------");
-//        return listProduct;
     }
-    public String getURLForResource (int resourceId) {
-        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
-    }
-
-//
-//    public void readData(DatabaseReference DB, final MyCallback myCallback) {
-//        DB.child("product").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                Product product = new Product();
-//                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-//                    product.setId(childDataSnapshot.child("id").getValue().toString());
-//                    product.setName(childDataSnapshot.child("name").getValue().toString());
-//                    Log.v("", childDataSnapshot.getKey()+ " Value : " + childDataSnapshot.child("name").getValue().toString());
-//                }
-////
-////                    product.setId(dataSnapshot.child("p01").child("id").getValue().toString());
-////                    product.setName(dataSnapshot.child("p01").child("name").getValue().toString());
-////                    product.setDescription(dataSnapshot.child("p01").child("description").getValue().toString());
-////                    product.setPostedTime(new Date());
-////                    product.setCategory(dataSnapshot.child("p01").child("category").getValue().toString());
-////                    product.setBrand(dataSnapshot.child("p01").child("brand").getValue().toString());
-////                    product.setGender(dataSnapshot.child("p01").child("gender").getValue().toString());
-////
-////                    List<String> listimage = new ArrayList<>();
-////                    dataSnapshot.child("p01").child("imageUrls").getValue().toString();
-////                    String[] image = dataSnapshot.child("p01").child("imageUrls").getValue().toString().split(",");
-////                    listimage.add(image[0]);
-////                    product.setImageUrls(listimage);
-//
-////                    product.setSize(Double.parseDouble(dataSnapshot.child("p01").child("size").getValue().toString()));
-////                    product.setAvailable(true);
-////                    product.setCurrentPrice(Double.parseDouble(dataSnapshot.child("p01").child("currentPrice").getValue().toString()));
-////                    product.setOriginalPrice(Double.parseDouble(dataSnapshot.child("p01").child("originalPrice").getValue().toString()));
-////                    product.setAverageRatings(Double.parseDouble(dataSnapshot.child("p01").child("averageRatings").getValue().toString()));
-////                    product.setSalesRate(Double.parseDouble(dataSnapshot.child("p01").child("salesRate").getValue().toString()));
-//                listProduct.add(product);
-//                myCallback.onCallback(product);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-//
-//    public interface MyCallback {
-//        void onCallback(Product value);
-//    }
 
 }

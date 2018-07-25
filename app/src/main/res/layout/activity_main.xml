@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/homeback"
+    android:background="@drawable/mainpic"
     tools:context=".MainActivity">
 
     <Button
@@ -13,25 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="85dp"
+        android:layout_marginBottom="160dp"
         android:alpha="0.25"
         android:text="Continues"
-        android:textColor="?android:attr/colorForeground"
+        android:textColor="@color/colorRed"
         android:textColorLink="?android:attr/colorForeground" />
-
-    <TextView
-        android:id="@+id/casual"
-        android:layout_width="292dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="301dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:text="Shoes Store"
-        android:textSize="50sp"
-        app:fontFamily="casual" />
 
     <Button
         android:id="@+id/btnweb"
