@@ -73,6 +73,7 @@ public class HomeActivity extends AppCompatActivity
     private static final int PRODUCT_MAN_MODE = 2;
     private static final int PRODUCT_WOMAN_MODE = 3;
     private static final int PRODUCT_KIDS_MODE = 4;
+    private static final int PRODUCT_BRAND_MODE = 5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,26 +108,8 @@ public class HomeActivity extends AppCompatActivity
         txtName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtName1);
         txtEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtEmail1);
 
-
-        //listProduct = (ListView) v.findViewById(R.id.viewProduct);
-
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         DB = FirebaseDatabase.getInstance().getReferenceFromUrl("https://shoeshopdb.firebaseio.com/");
-
-        //ProductDAO productDAO = new ProductDAO();
-        //productDAO.getFullProduct(DB, listProduct, this);
-
-
-
-//        listProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Product product =(Product) adapterView.getItemAtPosition(i);
-//                Intent intent = new Intent(HomeActivity.this, ProductDetailActivity.class);
-//                intent.putExtra("data", product);
-//                startActivity(intent);
-//            }
-//        });
 
         View getAppBar = (View) drawer.findViewById(R.id.homelayout);
         cart = (FloatingActionButton) getAppBar.findViewById(R.id.fab);
@@ -154,11 +137,65 @@ public class HomeActivity extends AppCompatActivity
         listProductProduct = (GridView) v.findViewById(R.id.gridViewProduct);
         gridViewBrand = (GridView) v.findViewById(R.id.gridViewBrand);
 
-        switchView();
+        listProductMan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                viewPro(adapterView, i);
+            }
+        });
+
+        listProductWomen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                viewPro(adapterView, i);
+            }
+        });
+
+        listProductProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                viewPro(adapterView, i);
+            }
+        });
+
+        listProductKids.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                viewPro(adapterView, i);
+            }
+        });
+
+        listBrand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Brand brand = (Brand) adapterView.getItemAtPosition(i);
+                currentMode = PRODUCT_BRAND_MODE;
+                switchView(brand.getName());
+            }
+        });
+
+        gridViewBrand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Brand brand = (Brand) adapterView.getItemAtPosition(i);
+                currentMode = PRODUCT_BRAND_MODE;
+                switchView(brand.getName());
+            }
+        });
+
+        switchView("");
 
     }
 
-    private void switchView(){
+    private void viewPro(AdapterView<?> adapterView,int i){
+        Product product =(Product) adapterView.getItemAtPosition(i);
+        Intent intent = new Intent(HomeActivity.this, ProductDetailActivity.class);
+        intent.putExtra("data", product);
+        startActivity(intent);
+    }
+
+
+    private void switchView(String brand){
         if(currentMode == HOME_MODE){
             viewStubHome.setVisibility(View.VISIBLE);
             viewStubBrand.setVisibility(View.GONE);
@@ -172,10 +209,10 @@ public class HomeActivity extends AppCompatActivity
             viewStubBrand.setVisibility(View.GONE);
             viewStubProduct.setVisibility(View.VISIBLE);
         }
-        setAdapter();
+        setAdapter(brand);
     }
 
-    private void setAdapter(){
+    private void setAdapter(String brand){
         if(currentMode == HOME_MODE){
             initBrand("home");
             initProduct("Men");
@@ -183,7 +220,15 @@ public class HomeActivity extends AppCompatActivity
             initProduct("Kids");
         }else if(currentMode == BRAND_MODE){
             initBrand("");
-        }else {
+        }else if(currentMode == PRODUCT_MAN_MODE){
+            initProduct("AllMen");
+        }else if(currentMode == PRODUCT_WOMAN_MODE){
+            initProduct("AllWomen");
+        }else if(currentMode == PRODUCT_KIDS_MODE){
+            initProduct("AllKids");
+        }else if(currentMode == PRODUCT_BRAND_MODE){
+            initProduct(brand);
+        }else{
             initProduct("");
         }
     }
@@ -237,6 +282,22 @@ public class HomeActivity extends AppCompatActivity
                     listProduct.add(product);
                     productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
                     listProductKids.setAdapter(productShowAdapter);
+                }else if(gender.contains(product.getGender()) && gender.contains("AllMen")){
+                    listProduct.add(product);
+                    productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
+                    listProductProduct.setAdapter(productShowAdapter);
+                }else if(gender.contains(product.getGender()) && gender.contains("AllWomen")){
+                    listProduct.add(product);
+                    productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
+                    listProductProduct.setAdapter(productShowAdapter);
+                }else if(gender.contains(product.getGender()) && gender.contains("AllKids")){
+                    listProduct.add(product);
+                    productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
+                    listProductProduct.setAdapter(productShowAdapter);
+                }else if(gender.contains(product.getBrand())){
+                    listProduct.add(product);
+                    productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
+                    listProductProduct.setAdapter(productShowAdapter);
                 }else{
                     listProduct.add(product);
                     productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
@@ -351,7 +412,7 @@ public class HomeActivity extends AppCompatActivity
             finish();
             startActivity(intent);
         }
-        switchView();
+        switchView("");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
