@@ -89,7 +89,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         final CartItem cartItem = new CartItem();
         cartItem.setId(product.getId());
         cartItem.setName(product.getName());
-        cartItem.setImage(product.getImageUrls().get(1));
+        cartItem.setImage(product.getImageUrls().get(0));
         double newprice = product.getOriginalPrice() - ((product.getOriginalPrice()*product.getSalesRate())/100);
         cartItem.setPrice(newprice);
         cartItem.setQuantity(1);

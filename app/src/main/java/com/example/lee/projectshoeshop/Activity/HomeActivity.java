@@ -271,32 +271,32 @@ public class HomeActivity extends AppCompatActivity
                     product.setSize(listSize);
                     product.setQuantity(Double.parseDouble(childDataSnapshot.child("quantity").getValue().toString()));
 
-                    if(gender.contains(product.getGender()) && gender.contains("Men")){
-                        if(count > 2){
+                    if(product.getGender().contains(gender) && "Men".contains(gender)){
+                        if(count > 3){
                             break;
                         }else {
                             listProduct.add(product);
                         }
                         count++;
-                    }else if(gender.contains(product.getGender()) && gender.contains("Women")){
-                        if(count > 2){
+                    }else if(product.getGender().contains(gender) && "Women".contains(gender)){
+                        if(count > 3){
                             break;
                         }else {
                             listProduct.add(product);
                         }
                         count++;
-                    }else if(gender.contains(product.getGender()) && gender.contains("Kids")){
-                        if(count > 2){
+                    }else if(product.getGender().contains(gender) && "Kids".contains(gender)){
+                        if(count > 3){
                             break;
                         }else {
                             listProduct.add(product);
                         }
                         count++;
-                    }else if(gender.contains(product.getGender()) && gender.contains("AllMen")){
+                    }else if(product.getGender().contains(gender.substring(3)) && "AllMen".equals(gender)){
                         listProduct.add(product);
-                    }else if(gender.contains(product.getGender()) && gender.contains("AllWomen")){
+                    }else if(product.getGender().contains(gender.substring(3)) && "AllWomen".equals(gender)){
                         listProduct.add(product);
-                    }else if(gender.contains(product.getGender()) && gender.contains("AllKids")){
+                    }else if(product.getGender().contains(gender.substring(3)) && "AllKids".equals(gender)){
                         listProduct.add(product);
                     }else if(gender.contains(product.getBrand())){
                         checkBrand = true;
@@ -305,23 +305,22 @@ public class HomeActivity extends AppCompatActivity
 //                        listProduct.add(product);
                     }
                 }
-
-                if(gender.contains("Men")){
+                if("Men".equals(gender)){
                     productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
                     listProductMan.setAdapter(productShowAdapter);
-                }else if(gender.contains("Women")){
+                }else if("Women".equals(gender)){
                     productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
                     listProductWomen.setAdapter(productShowAdapter);
-                }else if(gender.contains("Kids")){
+                }else if("Kids".equals(gender)){
                     productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
                     listProductKids.setAdapter(productShowAdapter);
-                }else if(gender.contains("AllMen")){
+                }else if("AllMen".equals(gender)){
                     productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
                     listProductProduct.setAdapter(productShowAdapter);
-                }else if(gender.contains("AllWomen")){
+                }else if("AllWomen".equals(gender)){
                     productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
                     listProductProduct.setAdapter(productShowAdapter);
-                }else if(gender.contains("AllKids")){
+                }else if("AllKids".equals(gender)){
                     productShowAdapter = new ProductShowAdapter(HomeActivity.this, R.layout.product_adapter_gridview, listProduct);
                     listProductProduct.setAdapter(productShowAdapter);
                 }else if(checkBrand == true){
@@ -472,6 +471,11 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void signOut() {
-        mAuth.signOut();
+        FirebaseAuth.getInstance().signOut();
+//        mAuth.signOut();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if(currentUser.getProviderId().equals("google.com")){
+//
+//        }
     }
 }

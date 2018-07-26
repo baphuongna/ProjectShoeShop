@@ -57,7 +57,7 @@ public class ProductShowAdapter extends ArrayAdapter<Product> {
         Product product = arrProduct.get(position);
         List<String> image = product.getImageUrls();
         if(image.size() != 0){
-            StorageReference firebaseStorage = FirebaseStorage.getInstance().getReference().child(image.get(1)+".PNG");
+            StorageReference firebaseStorage = FirebaseStorage.getInstance().getReference().child(image.get(0)+".PNG");
             try {
                 final File localFile = File.createTempFile("images", "jpg");
                 firebaseStorage.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -75,7 +75,7 @@ public class ProductShowAdapter extends ArrayAdapter<Product> {
             } catch (IOException e ) {}
         }
         viewHolder.txtNamePro.setText(product.getName());
-        viewHolder.txtPrice.setText(product.getCurrentPrice()+"VND");
+        viewHolder.txtPrice.setText("$"+product.getCurrentPrice());
         viewHolder.pRating.setRating(Float.valueOf(product.getAverageRatings().toString()));
 
         return convertView;
