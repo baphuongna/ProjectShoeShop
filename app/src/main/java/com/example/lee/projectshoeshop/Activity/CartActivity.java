@@ -44,17 +44,18 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<CartItem> arrCart = new ArrayList<>();
-                CartItem cartItem = new CartItem();
                 double total = 0;
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    CartItem cartItem = new CartItem();
                     cartItem.setId(childDataSnapshot.child("id").getValue().toString());
                     cartItem.setName(childDataSnapshot.child("name").getValue().toString());
                     cartItem.setQuantity(Double.parseDouble(childDataSnapshot.child("quantity").getValue().toString()));
                     cartItem.setImage(childDataSnapshot.child("image").getValue().toString());
                     cartItem.setPrice(Double.parseDouble(childDataSnapshot.child("price").getValue().toString()));
                     total += Double.parseDouble(childDataSnapshot.child("price").getValue().toString());
+                    arrCart.add(cartItem);
                 }
-                arrCart.add(cartItem);
+
                 if(!dataSnapshot.exists()){
                     Toast.makeText(CartActivity.this, "Cart is Empty. Please Add Product to cart before view Cart!", Toast.LENGTH_SHORT).show();
                     finish();

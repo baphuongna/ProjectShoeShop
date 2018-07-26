@@ -34,8 +34,9 @@ public class ProductDAO {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Product> listProduct = new ArrayList<>();
-                Product product = new Product();
+
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    Product product = new Product();
                     product.setId(childDataSnapshot.child("id").getValue().toString());
                     product.setName(childDataSnapshot.child("name").getValue().toString());
                     product.setCurrentPrice(Double.parseDouble(childDataSnapshot.child("currentPrice").getValue().toString()));
@@ -64,8 +65,9 @@ public class ProductDAO {
 
                     product.setSize(listSize);
                     product.setQuantity(Double.parseDouble(childDataSnapshot.child("quantity").getValue().toString()));
+                    listProduct.add(product);
                 }
-                listProduct.add(product);
+
                 ProductAdapter productAdapter = new ProductAdapter(context, R.layout.product_adapter, listProduct);
                 listView.setAdapter(productAdapter);
             }
